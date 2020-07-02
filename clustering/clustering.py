@@ -72,17 +72,36 @@ folder_path = '.'
 food_coded_path = os.path.join(folder_path, 'food_coded.csv')
 food_coded_data = pd.read_csv(food_coded_path)
 
-def clean_floats(x):
+def clean_numeric(x, function):
 	try:
-		result = float(x)
+		if function == 'float':
+			result = float(x)
+		else: 
+			result = int(x)
 	except:
 		result = np.nan
 	return result
 
-def clean_numeric_column(data, column_name):
+def clean_numeric_column(data, column_name, function='int'):
 	imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
-	result = imputer.fit_transform(np.array(data[column_name].apply(clean_floats)).reshape(-1,1)).flatten()
+	result = imputer.fit_transform(np.array(data[column_name].apply(clean_floats, function)).reshape(-1,1)).flatten()
 	return pd.Series(result)
+
+def clean_all_columns(data):
+	for x in [('GPA', 'float'), 'Gender', 'breakfast', 'calories_chicken',	'calories_day', 'calories_scone', 'coffee', 
+	'comfort_food_reasons_coded', 'cook', 'comfort_food_reasons_coded', 'cuisine', 'diet_current_coded', 'eating_changes_coded',
+	'eating_changes_coded1', 'eating_out', 'employment', 'ethnic_food', 'exercise', 'father_education', 'fav_cuisine_coded', 'fav_food',
+	'fries', 'fruit_day', 'grade_level', 'greek_food', 'ideal_diet_coded', 'income', 'indian_food', 'italian_food', 'life_rewarding', 'marital_status', 
+	'mother_education', 'nutritional_check', 'on_off_campus', 'parents_cook', 'pay_meal_out', 'persian_food', 'self_perception_weight', 'soup', 'sports', 'thai_food', 'tortilla_calories', 'turkey_calories',
+	'veggies_day', 'vitamins', 'waffle_calories', 'weight']:
+		if type(x) == tuple:
+			clean_column = clean_numeric_column(data, x[0], x[1])
+			data.drop(labels=x[0], axis='columns', inplace=True)
+			data[x[0]] = clean_column
+		else:
+			clean_column = clean_numeric_column(data, x)
+			data.drop(labels=x, axis='columns', inplace=True)
+			data[x] = clean_column
 
 columns = ['comfort_food', 'comfort_food_reasons', 'diet_current', 'eating_changes', 
 'food_childhood', 'healthy_meal', 'ideal_diet', 'meals_dinner_friend']
@@ -101,7 +120,7 @@ def get_word_frequence_comma_sep(column, ngram_range=(1,1)):
 	vec.vocabulary_.items()] 
 	words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
 	return words_freq 
-
+,
 
 def get_tfidf_weights(column, ngram_range=(1,4), max_features=100):
 	corpus = food_coded_data[column].values.astype('U')
