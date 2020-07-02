@@ -88,6 +88,7 @@ def clean_numeric_column(data, column_name, function='int'):
 	return pd.Series(result)
 
 def clean_all_columns(data):
+	result = data.copy()
 	for x in [('GPA', 'float'), 'Gender', 'breakfast', 'calories_chicken',	'calories_day', 'calories_scone', 'coffee', 
 	'comfort_food_reasons_coded', 'cook', 'comfort_food_reasons_coded', 'cuisine', 'diet_current_coded', 'eating_changes_coded',
 	'eating_changes_coded1', 'eating_out', 'employment', 'ethnic_food', 'exercise', 'father_education', 'fav_cuisine_coded', 'fav_food',
@@ -95,13 +96,14 @@ def clean_all_columns(data):
 	'mother_education', 'nutritional_check', 'on_off_campus', 'parents_cook', 'pay_meal_out', 'persian_food', 'self_perception_weight', 'soup', 'sports', 'thai_food', 'tortilla_calories', 'turkey_calories',
 	'veggies_day', 'vitamins', 'waffle_calories', 'weight']:
 		if type(x) == tuple:
-			clean_column = clean_numeric_column(data, x[0], x[1])
-			data.drop(labels=x[0], axis='columns', inplace=True)
-			data[x[0]] = clean_column
+			clean_column = clean_numeric_column(result, x[0], x[1])
+			result.drop(labels=x[0], axis='columns', inplace=True)
+			result[x[0]] = clean_column
 		else:
-			clean_column = clean_numeric_column(data, x)
-			data.drop(labels=x, axis='columns', inplace=True)
-			data[x] = clean_column
+			clean_column = clean_numeric_column(result, x)
+			result.drop(labels=x, axis='columns', inplace=True)
+			result[x] = clean_column
+	return result
 
 columns = ['comfort_food', 'comfort_food_reasons', 'diet_current', 'eating_changes', 
 'food_childhood', 'healthy_meal', 'ideal_diet', 'meals_dinner_friend']
