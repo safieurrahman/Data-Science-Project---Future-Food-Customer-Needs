@@ -72,7 +72,7 @@ folder_path = '.'
 food_coded_path = os.path.join(folder_path, 'food_coded.csv')
 food_coded_data = pd.read_csv(food_coded_path)
 
-def clean_numeric(x, function):
+def clean_numeric(x, function='int'):
 	try:
 		if function == 'float':
 			result = float(x)
@@ -84,7 +84,7 @@ def clean_numeric(x, function):
 
 def clean_numeric_column(data, column_name, function='int'):
 	imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
-	result = imputer.fit_transform(np.array(data[column_name].apply(clean_floats, function)).reshape(-1,1)).flatten()
+	result = imputer.fit_transform(np.array(data[column_name].apply(lambda x: clean_numeric(x, function))).reshape(-1,1)).flatten()
 	return pd.Series(result)
 
 def clean_all_columns(data):
@@ -100,7 +100,7 @@ def clean_all_columns(data):
 			result.drop(labels=x[0], axis='columns', inplace=True)
 			result[x[0]] = clean_column
 		else:
-			clean_column = clean_numeric_column(result, x)
+			clean_column = clean_numeric_column(result, x, 'int')
 			result.drop(labels=x, axis='columns', inplace=True)
 			result[x] = clean_column
 	return result
