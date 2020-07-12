@@ -17,6 +17,9 @@ from sklearn import naive_bayes
 from sklearn.linear_model import SGDClassifier
 from sklearn import metrics
 from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.cluster import KMeans
 
 stopwords = nltk.corpus.stopwords.words("english") 
 
@@ -89,7 +92,7 @@ def clean_numeric_column(data, column_name, function='int'):
 
 def clean_all_columns(data):
 	result = data.copy()
-	for x in [('GPA', 'float'), 'Gender', 'breakfast', 'calories_chicken',	'calories_day', 'calories_scone', 'coffee', 
+	for x in [('GPA', 'float'), 'Gender', 'breakfast', 'calories_chicken',	'calories_day', 'drink', 'calories_scone', 'coffee', 
 	'comfort_food_reasons_coded', 'cook', 'comfort_food_reasons_coded', 'cuisine', 'diet_current_coded', 'eating_changes_coded',
 	'eating_changes_coded1', 'eating_out', 'employment', 'ethnic_food', 'exercise', 'father_education', 'fav_cuisine_coded', 'fav_food',
 	'fries', 'fruit_day', 'grade_level', 'greek_food', 'ideal_diet_coded', 'income', 'indian_food', 'italian_food', 'life_rewarding', 'marital_status', 
@@ -111,7 +114,7 @@ columns = ['comfort_food', 'comfort_food_reasons', 'diet_current', 'eating_chang
 def get_word_frequence_comma_sep(column, ngram_range=(1,1)):
 	corpus = food_coded_data[column].values.astype('U')
 	cv = CountVectorizer(
-		tokenizer=tokenize_space, preprocessor=preprocess_sentences, 
+		tokenizer=tokenize, preprocessor=preprocess_sentences, 
 		ngram_range=(1, 1), stop_words=stopwords
 	)
 	vec = cv.fit(corpus)
@@ -133,3 +136,89 @@ def get_tfidf_weights(column, ngram_range=(1,4), max_features=100):
 	tfv.fit_transform(corpus)
 	features = dict(zip(tfv.get_feature_names(), tfv.idf_))
 	return features 
+
+# This shows that its difficult to cluster the comfort food via simple tfidf
+def get_comfort_food_cluster_words(max_clusters):
+	corpus = food_coded_data['comfort_food'].values.astype('U')
+	tfv = TfidfVectorizer(ngram_range=(1,1), preprocessor=preprocess_comfort_food, 
+		tokenizer=tokenize
+	)
+	tfidf = tfv.fit_transform(corpus)
+	K = (3, max_clusters)
+	for k in K:
+		kmeans = KMeans(n_clusters=k, init='k-means++', max_iter=100, n_init=1).fit(tfidf)
+		order_centroids = kmeans.cluster_centers_.copy().argsort()[:, ::-1]
+		terms = tfv.get_feature_names()
+		for i in range(n_clusters):
+			print("Cluster %d" % i)
+			for ind in order_centroids[i, :10]:
+				print("\t%s"% terms[ind])
+
+def get_comfort_food_cluster_elbow(max_clusters):
+	corpus = food_coded_data['comfort_food'].values.astype('U')
+	tfv = TfidfVectorizer(ngram_range=(1,1), preprocessor=preprocess_comfort_food, 
+		tokenizer=tokenize
+	)
+	tfidf = tfv.fit_transform(corpus)
+	cluster_range = range( 1, max_clusters,  init='k-means++', max_iter=100, n_init=1 )
+	cluster_errors = []
+	for num_clusters in cluster_range:
+		clusters = KMeans( num_clusters )
+		clusters.fit( X )
+		cluster_errors.append( clusters.inertia_ )
+	clusters_df = pd.DataFrame( { "num_clusters":cluster_range, "cluster_errors": cluster_errors } )
+
+	plt.figure(figsize=(12,6))
+	plt.plot( clusters_df.num_clusters, clusters_df.cluster_errors, marker = "o" )
+	plt.show()
+
+def get_comfort_food_clusters(n_clusters):
+	corpus = food_coded_data['comfort_food'].values.astype('U')
+	tfv = TfidfVectorizer(ngram_range=(1,1), preprocessor=preprocess_comfort_food, 
+		tokenizer=tokenize
+	)
+	tfidf = tfv.fit_transform(corpus)
+	return KMeans(n_clusters=n_clusters, init='k-means++', max_iter=100, n_init=1).fit_predict(tfidf)
+	
+
+
+def get_full_clusters(data, max_clusters, selected_columns):
+	# selected_columns = ['Gender',
+	#  'calories_day',
+	#  'comfort_food_coded',
+	#  'comfort_food_reasons_coded',
+	#  'cook',
+	#  'diet_current_coded',
+	#  'eating_changes_coded',
+	#  'eating_changes_coded1',
+	#  'eating_out',
+	#  'ethnic_food',
+	#  'exercise',
+	#  'fav_cuisine_coded',
+	#  'fruit_day',
+	#  'healthy_feeling',
+	#  'ideal_diet_coded',
+	#  'nutritional_check',
+	#  'sports',
+	#  'vitamins']
+	clean_data = clean_all_columns(data)
+	clean_data['comfort_food_coded'] = get_comfort_food_clusters(16)
+	n_clean_data = clean_data[selected_columns]
+	mms = MinMaxScaler()
+	mms.fit(n_clean_data)
+	transformed_data = mms.transform(n_clean_data)
+	Sum_of_squared_distances = []
+	K = range(1,max_clusters)
+	for k in K:
+	    km = KMeans(n_clusters=k, init='k-means++', max_iter=100, n_init=1)
+	    km = km.fit(transformed_data)
+	    Sum_of_squared_distances.append(km.inertia_)
+	plt.plot(K, Sum_of_squared_distances, 'bx-')
+	plt.xlabel('k')
+	plt.ylabel('Sum_of_squared_distances')
+	plt.title('Elbow Method For Optimal k')
+	plt.show()
+	# we see that 7 or 8 are good clusters
+	true_k = 8
+	labels = KMeans(n_clusters=true_k, init='k-means++', max_iter=100, n_init=1).fit_predict(transformed_data)
+	return pd.DataFrame(np.c_[transformed_data, labels], columns=selected_columns+['label'])
