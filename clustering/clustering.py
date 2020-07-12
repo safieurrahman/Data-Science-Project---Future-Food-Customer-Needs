@@ -160,11 +160,11 @@ def get_comfort_food_cluster_elbow(max_clusters):
 		tokenizer=tokenize
 	)
 	tfidf = tfv.fit_transform(corpus)
-	cluster_range = range( 1, max_clusters,  init='k-means++', max_iter=100, n_init=1 )
+	cluster_range = range(1, max_clusters)
 	cluster_errors = []
 	for num_clusters in cluster_range:
-		clusters = KMeans( num_clusters )
-		clusters.fit( X )
+		clusters = KMeans(num_clusters,init='k-means++', max_iter=100, n_init=1)
+		clusters.fit(tfidf)
 		cluster_errors.append( clusters.inertia_ )
 	clusters_df = pd.DataFrame( { "num_clusters":cluster_range, "cluster_errors": cluster_errors } )
 
@@ -202,7 +202,7 @@ def get_full_clusters(data, max_clusters, selected_columns):
 	#  'sports',
 	#  'vitamins']
 	clean_data = clean_all_columns(data)
-	clean_data['comfort_food_coded'] = get_comfort_food_clusters(16)
+	clean_data['comfort_food_coded'] = get_comfort_food_clusters(20)
 	n_clean_data = clean_data[selected_columns]
 	mms = MinMaxScaler()
 	mms.fit(n_clean_data)
@@ -218,7 +218,7 @@ def get_full_clusters(data, max_clusters, selected_columns):
 	plt.ylabel('Sum_of_squared_distances')
 	plt.title('Elbow Method For Optimal k')
 	plt.show()
-	# we see that 7 or 8 are good clusters
-	true_k = 8
+	# we see that 13 or 14 are good clusters
+	true_k = 14
 	labels = KMeans(n_clusters=true_k, init='k-means++', max_iter=100, n_init=1).fit_predict(transformed_data)
 	return pd.DataFrame(np.c_[transformed_data, labels], columns=selected_columns+['label'])
