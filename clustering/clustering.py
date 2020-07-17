@@ -205,15 +205,19 @@ def get_full_clusters(data, max_clusters, selected_columns):
 
 
 def get_clusters_results_summary(data):
-		for i in range(0, 14):
-			csummary = data[data.label == i].mean().drop('label')
-			res = 'For Cluster %s:\n' % i 
-			res += csummary.__str__()
-			res = re.sub('dtype: float64', '', res)
-			res +='\n'
-			print(res)
-			csummary.plot.bar()
-			plt.show()
+	fig, axs = plt.subplots(7, 2)
+	for i in range(0, 14):
+		csummary = data[data.label == i].mean().drop('label')
+		res = 'For Cluster %s:\n' % i 
+		res += csummary.__str__()
+		res = re.sub('dtype: float64', '', res)
+		res +='\n'
+		row = int(i / 2);
+		col = i % 2;
+		print(row, col)
+		axs[row][col].set_xticks([])
+		axs[row][col].bar(csummary.index, csummary.values)
+	plt.show()
 
 def main():
 	selected_columns = ['Gender',
