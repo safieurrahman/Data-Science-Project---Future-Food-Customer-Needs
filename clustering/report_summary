@@ -1,0 +1,294 @@
+For Cluster 0:
+Gender                        0.000000
+calories_day                  0.250000
+comfort_food_coded            0.868421
+comfort_food_reasons_coded    0.250000
+cook                          0.375000
+diet_current_coded            0.333333
+eating_changes_coded          0.000000
+eating_changes_coded1         0.166667
+eating_out                    0.250000
+ethnic_food                   0.500000
+exercise                      0.500000
+fav_cuisine_coded             0.687500
+fruit_day                     0.250000
+healthy_feeling               0.388889
+ideal_diet_coded              0.142857
+nutritional_check             0.250000
+sports                        1.000000
+vitamins                      1.000000
+label                         0.000000
+
+For Cluster 1:
+Gender                        1.000000
+calories_day                  0.716307
+comfort_food_coded            0.372180
+comfort_food_reasons_coded    0.232143
+cook                          0.535714
+diet_current_coded            0.095238
+eating_changes_coded          0.214286
+eating_changes_coded1         0.315476
+eating_out                    0.517857
+ethnic_food                   0.642857
+exercise                      0.092474
+fav_cuisine_coded             0.250000
+fruit_day                     0.910714
+healthy_feeling               0.357143
+ideal_diet_coded              0.571429
+nutritional_check             0.660714
+sports                        0.071429
+vitamins                      0.000000
+label                         1.000000
+
+For Cluster 2:
+Gender                        0.000000
+calories_day                  0.700943
+comfort_food_coded            0.389474
+comfort_food_reasons_coded    0.200000
+cook                          0.333333
+diet_current_coded            0.111111
+eating_changes_coded          0.222222
+eating_changes_coded1         0.300000
+eating_out                    0.316667
+ethnic_food                   0.750000
+exercise                      0.139286
+fav_cuisine_coded             0.308333
+fruit_day                     0.983333
+healthy_feeling               0.385185
+ideal_diet_coded              0.457143
+nutritional_check             0.783333
+sports                        0.000000
+vitamins                      0.000000
+label                         2.000000
+
+For Cluster 3:
+Gender                        0.000000
+calories_day                  0.000000
+comfort_food_coded            0.710526
+comfort_food_reasons_coded    0.125000
+cook                          0.375000
+diet_current_coded            0.333333
+eating_changes_coded          0.000000
+eating_changes_coded1         0.125000
+eating_out                    0.625000
+ethnic_food                   0.500000
+exercise                      0.500000
+fav_cuisine_coded             0.187500
+fruit_day                     0.750000
+healthy_feeling               0.666667
+ideal_diet_coded              0.714286
+nutritional_check             0.625000
+sports                        0.695122
+vitamins                      1.000000
+label                         3.000000
+
+For Cluster 4:
+Gender                        0.000000
+calories_day                  0.505146
+comfort_food_coded            0.612440
+comfort_food_reasons_coded    0.193182
+cook                          0.363636
+diet_current_coded            0.151515
+eating_changes_coded          0.151515
+eating_changes_coded1         0.424242
+eating_out                    0.522727
+ethnic_food                   0.840909
+exercise                      0.379870
+fav_cuisine_coded             0.306818
+fruit_day                     0.863636
+healthy_feeling               0.494949
+ideal_diet_coded              0.337662
+nutritional_check             0.363636
+sports                        1.000000
+vitamins                      1.000000
+label                         4.000000
+
+For Cluster 5:
+Gender                        1.000000
+calories_day                  0.500000
+comfort_food_coded            0.276316
+comfort_food_reasons_coded    0.125000
+cook                          0.625000
+diet_current_coded            0.166667
+eating_changes_coded          0.166667
+eating_changes_coded1         0.479167
+eating_out                    0.250000
+ethnic_food                   0.875000
+exercise                      0.750000
+fav_cuisine_coded             0.625000
+fruit_day                     0.750000
+healthy_feeling               0.638889
+ideal_diet_coded              0.107143
+nutritional_check             0.312500
+sports                        0.000000
+vitamins                      0.750000
+label                         5.000000
+
+For Cluster 6:
+Gender                        0.000000
+calories_day                  0.388889
+comfort_food_coded            0.619883
+comfort_food_reasons_coded    0.097222
+cook                          0.444444
+diet_current_coded            0.111111
+eating_changes_coded          0.444444
+eating_changes_coded1         0.268519
+eating_out                    0.361111
+ethnic_food                   0.638889
+exercise                      0.000000
+fav_cuisine_coded             0.152778
+fruit_day                     0.888889
+healthy_feeling               0.617284
+ideal_diet_coded              0.349206
+nutritional_check             0.611111
+sports                        0.000000
+vitamins                      1.000000
+label                         6.000000
+
+For Cluster 7:
+Gender                        0.000000
+calories_day                  0.571429
+comfort_food_coded            0.857143
+comfort_food_reasons_coded    0.053571
+cook                          0.321429
+diet_current_coded            0.333333
+eating_changes_coded          0.000000
+eating_changes_coded1         0.392857
+eating_out                    0.464286
+ethnic_food                   0.714286
+exercise                      0.571429
+fav_cuisine_coded             0.232143
+fruit_day                     0.678571
+healthy_feeling               0.476190
+ideal_diet_coded              0.306122
+nutritional_check             0.464286
+sports                        0.000000
+vitamins                      0.714286
+label                         7.000000
+
+For Cluster 8:
+Gender                        1.000000
+calories_day                  0.626769
+comfort_food_coded            0.546053
+comfort_food_reasons_coded    0.171875
+cook                          0.500000
+diet_current_coded            0.541667
+eating_changes_coded          0.041667
+eating_changes_coded1         0.260417
+eating_out                    0.312500
+ethnic_food                   0.781250
+exercise                      0.000000
+fav_cuisine_coded             0.515625
+fruit_day                     0.781250
+healthy_feeling               0.513889
+ideal_diet_coded              0.464286
+nutritional_check             0.718750
+sports                        0.000000
+vitamins                      0.625000
+label                         8.000000
+
+For Cluster 9:
+Gender                        1.000000
+calories_day                  0.430593
+comfort_food_coded            0.421053
+comfort_food_reasons_coded    0.321429
+cook                          0.420960
+diet_current_coded            0.428571
+eating_changes_coded          0.285714
+eating_changes_coded1         0.238095
+eating_out                    0.321429
+ethnic_food                   0.750000
+exercise                      0.399235
+fav_cuisine_coded             0.321429
+fruit_day                     0.785714
+healthy_feeling               0.444444
+ideal_diet_coded              0.530612
+nutritional_check             0.500000
+sports                        1.000000
+vitamins                      0.000000
+label                         9.000000
+
+For Cluster 10:
+Gender                         0.000000
+calories_day                   0.392034
+comfort_food_coded             0.216374
+comfort_food_reasons_coded     0.138889
+cook                           0.410747
+diet_current_coded             0.407407
+eating_changes_coded           0.000000
+eating_changes_coded1          0.268519
+eating_out                     0.444444
+ethnic_food                    0.805556
+exercise                       0.232143
+fav_cuisine_coded              0.194444
+fruit_day                      0.861111
+healthy_feeling                0.382716
+ideal_diet_coded               0.412698
+nutritional_check              0.388889
+sports                         0.000000
+vitamins                       1.000000
+label                         10.000000
+
+For Cluster 11:
+Gender                         0.000000
+calories_day                   0.531077
+comfort_food_coded             0.452012
+comfort_food_reasons_coded     0.235294
+cook                           0.397059
+diet_current_coded             0.313725
+eating_changes_coded           0.117647
+eating_changes_coded1          0.215686
+eating_out                     0.352941
+ethnic_food                    0.779412
+exercise                       0.463761
+fav_cuisine_coded              0.308824
+fruit_day                      0.794118
+healthy_feeling                0.542484
+ideal_diet_coded               0.260504
+nutritional_check              0.632353
+sports                         1.000000
+vitamins                       0.000000
+label                         11.000000
+
+For Cluster 12:
+Gender                         1.000000
+calories_day                   0.338050
+comfort_food_coded             0.515789
+comfort_food_reasons_coded     0.316667
+cook                           0.583333
+diet_current_coded             0.355556
+eating_changes_coded           0.200000
+eating_changes_coded1          0.277778
+eating_out                     0.400000
+ethnic_food                    0.450000
+exercise                       0.333333
+fav_cuisine_coded              0.183333
+fruit_day                      0.583333
+healthy_feeling                0.651852
+ideal_diet_coded               0.371429
+nutritional_check              0.216667
+sports                         0.292683
+vitamins                       1.000000
+label                         12.000000
+
+For Cluster 13:
+Gender                         0.200000
+calories_day                   0.502830
+comfort_food_coded             0.505263
+comfort_food_reasons_coded     0.075000
+cook                           0.589344
+diet_current_coded             0.000000
+eating_changes_coded           0.466667
+eating_changes_coded1          0.350000
+eating_out                     0.200000
+ethnic_food                    0.250000
+exercise                       0.500000
+fav_cuisine_coded              0.600000
+fruit_day                      0.850000
+healthy_feeling                0.488889
+ideal_diet_coded               0.228571
+nutritional_check              0.750000
+sports                         1.000000
+vitamins                       0.600000
+label                         13.000000
+

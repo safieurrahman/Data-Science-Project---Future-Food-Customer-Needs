@@ -125,7 +125,7 @@ def get_word_frequence_comma_sep(column, ngram_range=(1,1)):
 	vec.vocabulary_.items()] 
 	words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
 	return words_freq 
-,
+
 
 def get_tfidf_weights(column, ngram_range=(1,4), max_features=100):
 	corpus = food_coded_data[column].values.astype('U')
@@ -138,21 +138,19 @@ def get_tfidf_weights(column, ngram_range=(1,4), max_features=100):
 	return features 
 
 # This shows that its difficult to cluster the comfort food via simple tfidf
-def get_comfort_food_cluster_words(max_clusters):
+def get_comfort_food_cluster_words(n_clusters):
 	corpus = food_coded_data['comfort_food'].values.astype('U')
 	tfv = TfidfVectorizer(ngram_range=(1,1), preprocessor=preprocess_comfort_food, 
 		tokenizer=tokenize
 	)
 	tfidf = tfv.fit_transform(corpus)
-	K = (3, max_clusters)
-	for k in K:
-		kmeans = KMeans(n_clusters=k, init='k-means++', max_iter=100, n_init=1).fit(tfidf)
-		order_centroids = kmeans.cluster_centers_.copy().argsort()[:, ::-1]
-		terms = tfv.get_feature_names()
-		for i in range(n_clusters):
-			print("Cluster %d" % i)
-			for ind in order_centroids[i, :10]:
-				print("\t%s"% terms[ind])
+	kmeans = KMeans(n_clusters=n_clusters, init='k-means++', max_iter=100, n_init=1).fit(tfidf)
+	order_centroids = kmeans.cluster_centers_.copy().argsort()[:, ::-1]
+	terms = tfv.get_feature_names()
+	for i in range(n_clusters):
+		print("Cluster %d" % i)
+		for ind in order_centroids[i, :10]:
+			print("\t%s"% terms[ind])
 
 def get_comfort_food_cluster_elbow(max_clusters):
 	corpus = food_coded_data['comfort_food'].values.astype('U')
@@ -183,24 +181,6 @@ def get_comfort_food_clusters(n_clusters):
 
 
 def get_full_clusters(data, max_clusters, selected_columns):
-	# selected_columns = ['Gender',
-	#  'calories_day',
-	#  'comfort_food_coded',
-	#  'comfort_food_reasons_coded',
-	#  'cook',
-	#  'diet_current_coded',
-	#  'eating_changes_coded',
-	#  'eating_changes_coded1',
-	#  'eating_out',
-	#  'ethnic_food',
-	#  'exercise',
-	#  'fav_cuisine_coded',
-	#  'fruit_day',
-	#  'healthy_feeling',
-	#  'ideal_diet_coded',
-	#  'nutritional_check',
-	#  'sports',
-	#  'vitamins']
 	clean_data = clean_all_columns(data)
 	clean_data['comfort_food_coded'] = get_comfort_food_clusters(20)
 	n_clean_data = clean_data[selected_columns]
@@ -222,3 +202,43 @@ def get_full_clusters(data, max_clusters, selected_columns):
 	true_k = 14
 	labels = KMeans(n_clusters=true_k, init='k-means++', max_iter=100, n_init=1).fit_predict(transformed_data)
 	return pd.DataFrame(np.c_[transformed_data, labels], columns=selected_columns+['label'])
+
+
+def get_clusters_results_summary(data):
+		for i in range(0, 14):
+			csummary = data[data.label == i].mean().drop('label')
+			res = 'For Cluster %s:\n' % i 
+			res += csummary.__str__()
+			res = re.sub('dtype: float64', '', res)
+			res +='\n'
+			print(res)
+			csummary.plot.bar()
+			plt.show()
+
+def main():
+	selected_columns = ['Gender',
+		'calories_day',
+		'comfort_food_coded',
+		'comfort_food_reasons_coded',
+		'cook',
+		'diet_current_coded',
+		'eating_changes_coded',
+		'eating_changes_coded1',
+		'eating_out',
+		'ethnic_food',
+		'exercise',
+		'fav_cuisine_coded',
+		'fruit_day',
+		'healthy_feeling',
+		'ideal_diet_coded',
+		'nutritional_check',
+		'sports',
+		'vitamins'
+	]
+	clusters = get_full_clusters(food_coded_data, 14, selected_columns)
+	get_clusters_results_summary(clusters)
+
+if __name__ == '__main__':
+	main()
+
+
